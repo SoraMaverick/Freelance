@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect, useCallback } from 'react'; // useCallback hinzugefügt
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -102,7 +101,6 @@ function HomeScreen({ navigation, trainingDays, addTrainingDay, deleteTrainingDa
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Deine Trainingstage</Text>
 
             <FlatList
                 data={trainingDays}
@@ -146,7 +144,7 @@ function HomeScreen({ navigation, trainingDays, addTrainingDay, deleteTrainingDa
                             accessibilityRole="button"
                             accessibilityLabel="Abbrechen"
                         >
-                            <Text style={styles.buttonText}>Abbrechen</Text>
+                            <Text style={styles.buttonText}>Cancel</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[styles.button, styles.primaryButton]}
@@ -154,7 +152,7 @@ function HomeScreen({ navigation, trainingDays, addTrainingDay, deleteTrainingDa
                             accessibilityRole="button"
                             accessibilityLabel="Trainingstag hinzufügen"
                         >
-                            <Text style={styles.buttonText}>Hinzufügen</Text>
+                            <Text style={styles.buttonText}>Add</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -374,7 +372,7 @@ export default function App() {
         <Stack.Navigator
           initialRouteName="Home"
           screenOptions={{
-            headerStyle: { backgroundColor: '#4285F4' },
+            headerStyle: { backgroundColor: '#6A5ACD' },
             headerTintColor: '#FFFFFF',
             headerTitleStyle: { fontWeight: 'bold' },
           }}
@@ -426,23 +424,28 @@ export default function App() {
       </NavigationContainer>
     </View>
   );
+
+  
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    // Old: backgroundColor: '#F5F5F5',
+    backgroundColor: '#121212', // Dunkler Hintergrund
     paddingTop: 10,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
+    // Old: backgroundColor: '#F5F5F5',
+    backgroundColor: '#121212', // Dunkler Hintergrund
   },
   loadingText: {
     fontSize: 18,
-    color: '#616161',
+    // Old: color: '#616161',
+    color: '#E0E0E0', // Heller Text für Kontrast
     marginTop: 10,
   },
   header: {
@@ -450,29 +453,33 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#212121',
+    // Old: color: '#212121',
+    color: '#F0F0F0', // Sehr heller Text für Überschriften
   },
   item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    // Old: backgroundColor: '#FFFFFF',
+    backgroundColor: '#1E1E1E', // Etwas helleres Schwarz für die Karten
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
     borderRadius: 12,
-    shadowColor: '#000',
+    shadowColor: '#000', // Schatten kann beibehalten oder leicht angepasst werden
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.1, // Schatten-Opazität eventuell leicht erhöhen oder ändern, wenn der Hintergrund dunkler ist
     shadowRadius: 6,
     elevation: 5,
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    // Old: borderColor: '#E0E0E0',
+    borderColor: '#333333', // Dunklerer Rand für die Karten
   },
   itemTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#212121',
+    // Old: color: '#212121',
+    color: '#E0E0E0', // Heller Text für Kartentitel
   },
   itemActions: {
     flexDirection: 'row',
@@ -482,16 +489,19 @@ const styles = StyleSheet.create({
   deleteButton: {
     padding: 8,
     borderRadius: 5,
-    backgroundColor: '#FFEBEE',
+    // Old: backgroundColor: '#FFEBEE',
+    backgroundColor: '#5C0000', // Dunkles Rot für den Lösch-Button-Hintergrund
   },
   deleteButtonIcon: {
-    color: '#EA4335',
+    // Old: color: '#EA4335',
+    color: '#FF6F61', // Etwas helleres Rot für das Icon
   },
   emptyText: {
     textAlign: 'center',
     marginTop: 50,
     fontSize: 16,
-    color: '#616161',
+    // Old: color: '#616161',
+    color: '#AAAAAA', // Hellerer Grauton
   },
   fab: {
     position: 'absolute',
@@ -499,68 +509,82 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    right: 20,
-    bottom: 20,
-    backgroundColor: '#4285F4',
+    right: 20, // Bleibt rechts
+    bottom: 80, // HIER GEÄNDERT: Höherer Wert für mehr Abstand nach unten
+    backgroundColor: '#6A5ACD',
     borderRadius: 30,
     elevation: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
+    zIndex: 10,
   },
   modalContent: {
-    backgroundColor: '#FFFFFF',
+    // Old: backgroundColor: '#FFFFFF',
+    backgroundColor: '#282828', // Dunklerer Hintergrund für Modal
     padding: 25,
     borderRadius: 15,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
+    // Old: borderColor: 'rgba(0, 0, 0, 0.1)',
+    borderColor: '#444444', // Dunklerer Rand für Modal
     alignItems: 'center',
   },
   modalTitle: {
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#212121',
+    // Old: color: '#212121',
+    color: '#F0F0F0', // Heller Text
   },
   input: {
     width: '100%',
-    backgroundColor: '#F9F9F9',
+    // Old: backgroundColor: '#F9F9F9',
+    backgroundColor: '#333333', // Dunklerer Input-Hintergrund
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    // Old: borderColor: '#E0E0E0',
+    borderColor: '#555555', // Dunklerer Input-Rand
     borderRadius: 8,
     padding: 15,
     marginBottom: 15,
     fontSize: 16,
-    color: '#212121',
+    // Old: color: '#212121',
+    color: '#E0E0E0', // Heller Text im Input
   },
   inputPlaceholder: {
-    color: '#9E9E9E',
+    // Old: color: '#9E9E9E',
+    color: '#BBBBBB', // Hellerer Platzhaltertext
   },
   modalButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginTop: 10,
+      flexDirection: 'row',
+      // justify-content kann je nach gewünschtem Abstand und Layout variieren.
+      // 'space-between' verteilt die Buttons an die Ränder, 'center' zentriert sie.
+      justifyContent: 'space-between', // Oder 'center', je nachdem, was du bevorzugst
+      width: '100%',
+      marginTop: 10,
+      paddingHorizontal: 10, // Füge hier einen kleinen horizontalen Padding hinzu
   },
   button: {
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 120,
+      paddingVertical: 12,
+      paddingHorizontal: 10, // Weniger Padding, um mehr Platz zu lassen
+      borderRadius: 8,
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1, // WICHTIG: Erlaube dem Button, den verfügbaren Platz auszufüllen
+      marginHorizontal: 5, // WICHTIG: Füge einen horizontalen Margin zwischen den Buttons hinzu
+      // minWidth: 120, // Diesen hier können wir entfernen, da flex: 1 das übernimmt
   },
   primaryButton: {
-    backgroundColor: '#4285F4',
-    marginLeft: 10,
+      backgroundColor: '#6A5ACD',
+      // marginLeft: 10, // Nicht mehr benötigt wegen marginHorizontal
   },
   cancelButton: {
-    backgroundColor: '#EA4335',
-    marginRight: 10,
+      backgroundColor: '#FF6F61',
+      // marginRight: 10, // Nicht mehr benötigt wegen marginHorizontal
   },
   buttonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
+      color: '#FFFFFF',
+      fontSize: 16,
+      fontWeight: 'bold',
+      textAlign: 'center', // Zentriere den Text im Button, falls er umbricht
   },
 });
