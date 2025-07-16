@@ -1,0 +1,33 @@
+GymTrainApp
+
+  Design
+    -> Clean 
+    -> Minimalist
+    -> Focus on Darkmode 
+      -> ()light mode later ? 
+    
+  
+  Gamifications ? 
+    -> Level System
+      -> SL esque 
+        -> XP durch Quest können in fähigkeiten gesteckt werden
+        
+    -> Quests ~ GymDays => Routine 
+      -> XP 
+      -> Rewards
+      
+     -> Statistics
+      -> XP 
+      
+     -> Friends
+      -> Stat vergleich 
+      
+  Functions 
+    -> Gym Days
+      -> Traingsarten
+        -> Trainingshistory
+        -> ()statistics -> Gamifications
+          -> wheight
+          -> reps/sets
+          
+    -> 
