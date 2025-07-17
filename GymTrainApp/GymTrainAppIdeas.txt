@@ -10,7 +10,7 @@ GymTrainApp
   Gamifications ? 
     -> Level System
       -> SL esque 
-        -> XP durch Quest können in fähigkeiten gesteckt werden
+        -> XP durch Quest kï¿½nnen in fï¿½higkeiten gesteckt werden
         
     -> Quests ~ GymDays => Routine 
       -> XP 
@@ -30,4 +30,125 @@ GymTrainApp
           -> wheight
           -> reps/sets
           
-    -> 
+
+
+GymTrainApp: Priority Breakdown
+Phase 0: Groundwork (Essential & Immediate)
+This is the absolute baseline.
+
+P1: Core Data Models: Define the structure of your main data entities.
+
+  TrainingDay: (ID, Name, List of Exercise IDs)
+
+  Exercise: (ID, Name, History list)
+
+  HistoryEntry: (ID, Date, Sets, Reps, Weight)
+
+  User Profile: (ID, Name, Current XP, Current Level, Skill Points, perhaps a basic array for "unlocked abilities/badges").
+
+Phase 1: Core Functionality + Profile & Basic Gamification (Alpha/MVP)
+  This phase gets your most critical features working and allows for initial testing of the unique gamification loop.
+
+P1: Gym Days Management (CRUD):
+
+  Create/Edit/Delete Gym Days: Users can add, name, and remove their workout routines.
+
+  Add/Remove Exercises to/from Gym Day: Link exercises to specific Gym Days.
+
+  Basic display of Gym Days on the main screen.
+
+  P1: Exercise Management (CRUD):
+
+  Create/Edit/Delete Exercises: Users can define custom exercises.
+
+  Basic Exercise Library (maybe a few pre-filled common exercises to start).
+
+  P1: Workout Session (Basic):
+
+  Start/End Workout: Simple flow to begin and finish a workout session for a chosen Gym Day.
+
+  Logging History Entries: For each exercise during a session, log Sets, Reps, and Weight.
+
+  Basic rest timer functionality.
+
+P1: Training History View:
+
+  List all past workouts.
+
+  View details of a specific past workout (exercises, sets/reps/weight logged).
+
+  Ability to edit/delete individual history entries.
+
+  P1: User Profile & Core Gamification System:
+
+  User Profile Screen: Display current level, XP, and perhaps skill points.
+
+  XP Calculation Logic: Basic mechanism to award XP:
+
+  Upon completing a workout.
+
+  Upon logging new history entries.
+
+  Level Up Logic: When XP reaches a threshold, increment level and reset XP, award skill points.
+
+  Skill Point Allocation (Basic): Simple screen to "spend" skill points (even if it just increments a counter for now, or logs which "skill" was chosen). No complex effects yet.
+
+Phase 2: Enhancements & Deeper Gamification (Beta Ready)
+Building on the core, making the app more engaging and useful.
+
+P2: Advanced Gamification:
+
+Quests System (Basic):
+
+Define a few simple quests (e.g., "Complete 3 workouts this week").
+
+Mechanism to track quest progress and award XP/rewards upon completion.
+
+Display active/completed quests on a dedicated screen or profile.
+
+Skill Tree UI/Logic (Initial): Visually represent the skill tree and allow users to invest points into specific "skills" (Strength, Endurance, Consistency).
+
+Badges/Achievements (Basic): Award simple badges for milestones (e.g., "First Workout!", "5 Workouts Completed").
+
+P2: Statistics & Progression:
+
+Individual Exercise Progression Charts: Display graphs for weight/reps over time for specific exercises within the history.
+
+Personal Bests (PB) Tracking: Automatically detect and highlight new PBs.
+
+Overall Progress Metrics: Display total volume lifted, total workouts, longest streak.
+
+P2: UI/UX polish:
+
+Refined navigation and transitions.
+
+Improved input forms for exercises/history.
+
+Refined dark mode theming.
+
+Phase 3: Social & Advanced Features (Polished Release / Continuous Improvement)
+These are great for long-term engagement but can come after the core is solid.
+
+P3: Friends & Social Features:
+
+User authentication (if not already implemented for profile).
+
+Friend system (add/remove friends).
+
+Basic leaderboards (XP, total workouts).
+
+Activity feed.
+
+P3: Advanced Workout Features:
+
+1RM calculator.
+
+Custom rest timers per exercise.
+
+Supersets/Dropsets planning.
+
+P3: More Complex Quests/Events: Time-limited events, community challenges.
+
+P3: Light Mode Implementation.
+
+P3: Workout Templates / Community Sharing.
