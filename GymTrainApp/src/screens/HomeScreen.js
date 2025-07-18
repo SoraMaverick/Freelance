@@ -10,6 +10,7 @@ const MemoizedTrainingDayItem = React.memo(function MemoizedTrainingDayItem({ it
     return (
         <TouchableOpacity style={styles.trainingDayCard} onPress={() => onPress(item.id, item.name)}>
             <Text style={styles.trainingDayText}>{displayName}</Text> 
+            
             <TouchableOpacity onPress={() => onDelete(item.id)} style={styles.deleteButton}> 
                 <MaterialIcons name="delete" size={20} color={styles.buttonText.color} />
             </TouchableOpacity>
@@ -63,7 +64,7 @@ export const HomeScreen = ({ navigation, trainingDays, addTrainingDay, deleteTra
 
             {/* --- CUSTOM HEADER FOR HOMESCREEN --- */}
             <View style={[styles.homeHeaderContainer, { paddingTop: 15 + insets.top }]}>
-                <Text style={styles.homeHeaderTitle}>Dashboard</Text> {/* Or "Home" */}
+                <Text style={styles.homeHeaderTitle}>Home</Text>
                 <TouchableOpacity
                     style={styles.homeProfileIconContainer}
                     onPress={() => navigation.navigate('Profile')} 
@@ -106,14 +107,16 @@ export const HomeScreen = ({ navigation, trainingDays, addTrainingDay, deleteTra
 
 
             {/* Floating Action Button (FAB) */}
+            
             <TouchableOpacity
-                style={styles.fab}
+                style={[styles.fab,{ bottom: -10 + insets.bottom }]}
                 onPress={toggleAddDayModal}
                 accessibilityRole="button"
                 accessibilityLabel="Neuen Trainingstag hinzufügen"
             >
                 <MaterialIcons name="add" size={30} color="#fff" />
             </TouchableOpacity>
+            
 
             {/* Deaktiviere das auskommentierte Modal und rücke es in den Code ein */}
             <Modal
@@ -220,6 +223,7 @@ export const createHomeScreenStyles = (themeStyles) => StyleSheet.create({
     },
     fab: {
         position: 'absolute',
+
         width: 60,
         height: 60,
         alignItems: 'center',

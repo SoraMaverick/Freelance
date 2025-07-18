@@ -15,25 +15,25 @@ export const ProfileScreen = ({ styles, navigation }) => {
 
     //Dummy Data for Status Panel
     const statusData = {
-        level: 18,
+        level: 0,
         title: "None",
         job: "None",
-        hp: 2220,
-        mp: 350,
+        hp: 100,
+        mp: 100,
         fatigue: 0,
-        str: 48,
-        vit: 27,
-        agi: 27,
-        int: 27,
-        per: 27,
-        availablePoints: 12,
+        str: 0,
+        vit: 0,
+        agi: 0,
+        int: 0,
+        per: 0,
+        availablePoints: 0,
     };
 
     const radarChartData = {
         labels: ["Strength", "Endurance", "Speed", "Flexibility", "Balance"],
         datasets: [
             {
-                data: [70, 85, 60, 90, 75], // Example skill levels (0-100)
+                data: [0, 0, 0, 0, 0], // Example skill levels (0-100)
                 // Use your accent color for the line/fill
                 color: (opacity = 1) => `rgba(106, 90, 205, ${opacity})`, // A purple accent
                 // Add fill color for the pentagon area
@@ -43,9 +43,9 @@ export const ProfileScreen = ({ styles, navigation }) => {
     };
 
     const radarChartConfig = {
-        backgroundColor: styles.exerciseCard.backgroundColor, // Use your card background
-        backgroundGradientFrom: styles.exerciseCard.backgroundColor,
-        backgroundGradientTo: styles.exerciseCard.backgroundColor,
+        // backgroundColor: styles.exerciseCard.backgroundColor, // Use your card background
+        backgroundGradientFrom: styles.exerciseCardBackgroundFrom.backgroundColor,
+        backgroundGradientTo: styles.exerciseCardBackgroundTo.backgroundColor,
         decimalPlaces: 0,
         color: (opacity = 1) => styles.accentColor1 || `rgba(255, 105, 180, ${opacity})`, // A pink accent for the labels
         labelColor: (opacity = 1) => styles.historyText.color || `rgba(187, 187, 187, ${opacity})`,
@@ -66,18 +66,14 @@ export const ProfileScreen = ({ styles, navigation }) => {
     return (
         <View style={styles.container}> {/* This ensures the whole screen uses your dark background */}
             {/* Header Section */}
-            <View style={styles.profileHeaderContainer}>
-                <Text>
-                    <TouchableOpacity style={styles.profileHeaderButton}>
-                        <MaterialIcons name="menu" size={28} color={styles.profileHeaderTitle.color} />
-                    </TouchableOpacity>
-                </Text>
-                <Text style={styles.profileHeaderTitle}>Profile</Text>
-                <Text>
-                    <TouchableOpacity style={styles.profileHeaderIcon}>
-                        <MaterialIcons name="account-circle" size={32} color={styles.profileHeaderTitle.color} />
-                    </TouchableOpacity>
-                </Text>
+            <View style={[styles.profileHeaderContainer, { paddingTop: 15 + insets.top }]}>
+                <TouchableOpacity style={styles.profileHeaderButton}>
+                    <MaterialIcons name="menu" size={28} color={styles.profileHeaderTitle.color} />
+                </TouchableOpacity>
+            <Text style={styles.profileHeaderTitle}>Profile</Text>
+                <TouchableOpacity style={styles.profileHeaderIcon}>
+                    <MaterialIcons name="account-circle" size={32} color={styles.profileHeaderTitle.color} />
+                </TouchableOpacity>
             </View>
 
             <ScrollView style={styles.scrollContentContainer}>

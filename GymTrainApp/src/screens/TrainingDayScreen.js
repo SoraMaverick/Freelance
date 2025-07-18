@@ -4,6 +4,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import Modal from 'react-native-modal';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 
 // MemoizedHistoryItem muss ZUERST definiert werden, da MemoizedExerciseItem es verwendet
 const MemoizedHistoryItem = memo(function MemoizedHistoryItem({
@@ -39,26 +41,22 @@ const MemoizedHistoryItem = memo(function MemoizedHistoryItem({
                 </Text>
             </View>
             <View style={styles.historyItemActions}>
-                <Text>
-                    <TouchableOpacity
-                        style={styles.editButton}
-                        onPress={() => onEditHistoryEntry({ ...item, parentId: parentExerciseId })} // Use parentExerciseId
-                        accessibilityRole="button"
-                        accessibilityLabel={`Eintrag vom ${item.date} bearbeiten`}
-                    >
-                        <MaterialIcons name="edit" size={20} color={styles.editButtonIcon.color} />
-                    </TouchableOpacity>
-                </Text>
-                <Text>
-                    <TouchableOpacity
-                        style={styles.deleteHistoryButton}
-                        onPress={() => onDeleteHistoryEntry(item.id)}
-                        accessibilityRole="button"
-                        accessibilityLabel={`Eintrag vom ${item.date} löschen`}
-                    >
-                        <MaterialIcons name="delete" size={20} color={styles.deleteHistoryButtonIcon.color} />
-                    </TouchableOpacity>
-                </Text>
+                <TouchableOpacity
+                    style={styles.editButton}
+                    onPress={() => onEditHistoryEntry({ ...item, parentId: parentExerciseId })} // Use parentExerciseId
+                    accessibilityRole="button"
+                    accessibilityLabel={`Eintrag vom ${item.date} bearbeiten`}
+                >
+                    <MaterialIcons name="edit" size={20} color={styles.editButtonIcon.color} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.deleteHistoryButton}
+                    onPress={() => onDeleteHistoryEntry(item.id)}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Eintrag vom ${item.date} löschen`}
+                >
+                    <MaterialIcons name="delete" size={20} color={styles.buttonText.color} />
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -78,40 +76,39 @@ const MemoizedExerciseItem = memo(function MemoizedExerciseItem({
 }) {
     return (
         <View style={styles.exerciseCard}>
-            <Text>
-                <TouchableOpacity
-                    onPress={() => toggleExpand(exercise.id)}
-                    style={styles.exerciseHeader}
-                    accessibilityRole="button"
-                    accessibilityLabel={expandedExerciseId === exercise.id ? `Übung ${exercise.name} einklappen` : `Übung ${exercise.name} ausklappen`}
-                >
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
-                        <Text style={styles.exerciseName}>{exercise.name}</Text>
-                        <View style={styles.exerciseActions}>
-                            <TouchableOpacity
-                                style={styles.deleteExerciseButton}
-                                onPress={(e) => {
-                                    e.stopPropagation();
-                                    deleteExercise(trainingDayId, exercise.id);
-                                }}
-                                accessibilityRole="button"
-                                accessibilityLabel={`Lösche Übung ${exercise.name}`}
-                            >
-                                <MaterialIcons name="delete" size={24} color={styles.deleteExerciseButtonIcon.color} />
-                            </TouchableOpacity>
-                            <MaterialIcons
-                                name={expandedExerciseId === exercise.id ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
-                                size={24}
-                                color={styles.exerciseName.color}
-                            />
-                        </View>
+
+            <TouchableOpacity
+                onPress={() => toggleExpand(exercise.id)}
+                style={styles.exerciseHeader}
+                accessibilityRole="button"
+                accessibilityLabel={expandedExerciseId === exercise.id ? `Übung ${exercise.name} einklappen` : `Übung ${exercise.name} ausklappen`}
+            >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flex: 1 }}>
+                    <Text style={styles.exerciseName}>{exercise.name}</Text>
+                    <View style={styles.exerciseActions}>
+                        <TouchableOpacity
+                            // style={styles.deleteExerciseButton}
+                            style={styles.deleteHistoryButton}
+                            onPress={(e) => {
+                                e.stopPropagation();
+                                deleteExercise(trainingDayId, exercise.id);
+                            }}
+                            accessibilityRole="button"
+                            accessibilityLabel={`Lösche Übung ${exercise.name}`}
+                        >
+                            <MaterialIcons name="delete" size={24} color={styles.buttonText.color} />
+                        </TouchableOpacity>
+                        <MaterialIcons
+                            name={expandedExerciseId === exercise.id ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
+                            size={24}
+                            color={styles.exerciseName.color}
+                        />
                     </View>
-                </TouchableOpacity>
-            </Text>
+                </View>
+            </TouchableOpacity>
 
             {expandedExerciseId === exercise.id && (
                 <View style={styles.exerciseDetails}>
-                    <Text>
                         <TouchableOpacity
                             style={styles.addEntryHeaderButton}
                             onPress={() => toggleAddEntryModal(exercise.id)}
@@ -121,7 +118,6 @@ const MemoizedExerciseItem = memo(function MemoizedExerciseItem({
                             <MaterialIcons name="add" size={22} color="#fff" />
                             <Text style={styles.addEntryButtonText}>Eintrag hinzufügen</Text>
                         </TouchableOpacity>
-                    </Text>
                     <FlatList
                         data={exercise.history}
                         renderItem={({ item }) => (
@@ -160,12 +156,12 @@ const TrainingDayScreen = ({ route, // Access navigation params
     // Get the specific training day data from the route params
     const { trainingDayId } = route.params;
     const currentTrainingDay = trainingDays.find(day => day.id === trainingDayId);
-
     // Ensure we have data
     if (!currentTrainingDay) {
         return <View style={styles.outerContainer}><Text style={styles.emptyText}>Training Day not found.</Text></View>;
     }
 
+    const insets = useSafeAreaInsets();
     const [expandedExerciseId, setExpandedExerciseId] = useState(null);
 
     // States für das Hinzufügen neuer Einträge zur Historie (im Modal)
@@ -318,6 +314,10 @@ const TrainingDayScreen = ({ route, // Access navigation params
 
     return (
         <View style={styles.outerContainer}>
+            <View style={[styles.homeHeaderContainer, { paddingTop: 15 + insets.top }]}>
+                <Text></Text>
+            </View>
+
             <ScrollView style={styles.scrollViewContent}>
 
                 <FlatList
@@ -341,16 +341,14 @@ const TrainingDayScreen = ({ route, // Access navigation params
                 />
             </ScrollView>
             
-            <Text>
-                <TouchableOpacity
-                    style={styles.fab}
-                    onPress={toggleExerciseModal}
-                    accessibilityRole="button"
-                    accessibilityLabel="Neue Übung hinzufügen"
-                >
-                    <MaterialIcons name="add" size={30} color="#fff" />
-                </TouchableOpacity>
-            </Text>
+            <TouchableOpacity
+                style={[styles.fab,{ bottom: -10 + insets.bottom }]}
+                onPress={toggleExerciseModal}
+                accessibilityRole="button"
+                accessibilityLabel="Neue Übung hinzufügen"
+            >
+                <MaterialIcons name="add" size={30} color="#fff" />
+            </TouchableOpacity>
 
             {/* Deine Modals */}
             <Modal
@@ -373,16 +371,12 @@ const TrainingDayScreen = ({ route, // Access navigation params
                         accessibilityLabel="Name der Übung eingeben"
                     />
                     <View style={styles.modalButtonContainer}>
-                        <Text>
-                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={toggleExerciseModal} accessibilityRole="button" accessibilityLabel="Abbrechen">
-                                <Text style={styles.buttonText}>Cancel</Text>
-                            </TouchableOpacity>
-                        </Text>
-                        <Text>
-                            <TouchableOpacity style={[styles.button, styles.primaryButton]} onPress={handleAddExercise} accessibilityRole="button" accessibilityLabel="Übung hinzufügen">
-                                <Text style={styles.buttonText}>Add</Text>
-                            </TouchableOpacity>
-                        </Text>
+                        <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={toggleExerciseModal} accessibilityRole="button" accessibilityLabel="Abbrechen">
+                            <Text style={styles.buttonText}>Cancel</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.button, styles.primaryButton]} onPress={handleAddExercise} accessibilityRole="button" accessibilityLabel="Übung hinzufügen">
+                            <Text style={styles.buttonText}>Add</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
@@ -426,16 +420,12 @@ const TrainingDayScreen = ({ route, // Access navigation params
                         accessibilityLabel="Gewicht eingeben"
                     />
                     <View style={styles.modalButtonContainer}>
-                        <Text>
-                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => toggleAddEntryModal()} accessibilityRole="button" accessibilityLabel="Abbrechen">
-                                <Text style={styles.buttonText}>Cancel</Text>
-                            </TouchableOpacity>
-                        </Text>
-                        <Text>
-                            <TouchableOpacity style={[styles.button, styles.primaryButton]} onPress={handleAddEntry} accessibilityRole="button" accessibilityLabel="Eintrag hinzufügen">
-                                <Text style={styles.buttonText}>Add</Text>
-                            </TouchableOpacity>
-                        </Text>
+                        <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => toggleAddEntryModal()} accessibilityRole="button" accessibilityLabel="Abbrechen">
+                            <Text style={styles.buttonText}>Cancel</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.button, styles.primaryButton]} onPress={handleAddEntry} accessibilityRole="button" accessibilityLabel="Eintrag hinzufügen">
+                            <Text style={styles.buttonText}>Add</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
@@ -488,16 +478,12 @@ const TrainingDayScreen = ({ route, // Access navigation params
                         accessibilityLabel="Gewicht bearbeiten"
                     />
                     <View style={styles.modalButtonContainer}>
-                        <Text>
-                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => handleEditHistoryEntry()} accessibilityRole="button" accessibilityLabel="Abbrechen">
-                                <Text style={styles.buttonText}>Cancel</Text>
-                            </TouchableOpacity>
-                        </Text>
-                        <Text>
-                            <TouchableOpacity style={[styles.button, styles.primaryButton]} onPress={handleUpdateEntry} accessibilityRole="button" accessibilityLabel="Änderungen speichern">
-                                <Text style={styles.buttonText}>Save</Text>
-                            </TouchableOpacity>
-                        </Text>
+                        <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={() => handleEditHistoryEntry()} accessibilityRole="button" accessibilityLabel="Abbrechen">
+                            <Text style={styles.buttonText}>Cancel</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.button, styles.primaryButton]} onPress={handleUpdateEntry} accessibilityRole="button" accessibilityLabel="Änderungen speichern">
+                            <Text style={styles.buttonText}>Save</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>

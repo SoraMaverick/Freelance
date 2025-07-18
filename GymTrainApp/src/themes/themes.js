@@ -26,6 +26,12 @@ export const darkThemeStyles = StyleSheet.create({
         fontWeight: 'bold',
     },
     // Card styles (used for exercises, summary cards etc.)
+    exerciseCardBackgroundFrom: {
+        backgroundColor: '#8900acff',
+    },
+    exerciseCardBackgroundTo: {
+        backgroundColor: '#0b00acff',
+    },
     exerciseCard: {
         backgroundColor: '#1E1E1E', // Slightly lighter dark gray for cards
         marginVertical: 8,
